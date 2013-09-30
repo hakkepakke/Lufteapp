@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Lufteapp</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_activity_log">ActivityLog</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="check_in">Check In</string>
+    <string name="show_log">Show Log</string>
+    <string name="imageText">It Guy Outside</string>
+    <string name="show_map">Open Map</string>
+    <string name="title_activity_view_map">ViewMap</string>
+
+</resources>
