@@ -24,7 +24,7 @@ public class GpsData extends Activity {
 		setContentView(R.layout.activity_gps_data);
 		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
-		db.execSQL("CREATE TABLE IF NOT EXISTS gpsData(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS gpsDataa(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
 	    
 	}
 
@@ -40,7 +40,7 @@ public class GpsData extends Activity {
 		/*
 		 * Midlertidig kode for å få ut siste fra DB
 		 * WHERE isHome = 1*/
-		Cursor cursor = db.rawQuery("SELECT * FROM gpsData WHERE isHome = 1;", null);
+		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
 		if(cursor.moveToFirst())
 		{
 			String lat = cursor.getString(0);
@@ -92,11 +92,11 @@ public class GpsData extends Activity {
 					//If home already exists, delete the current one first.
 					if(isHome == 1)
 					{
-						db.execSQL("DELETE FROM gpsData WHERE isHome = 1;");
+						db.execSQL("DELETE FROM gpsDataa WHERE isHome = 1;");
 					}
 					
 					//Try to store GPS data to database*/
-					db.execSQL("INSERT INTO gpsData VALUES('"+longitude + "','" + latitude + "','" + isHome + "');");
+					db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude + "','" + isHome + "','homeyo');");
 				       Toast.makeText(getApplicationContext(), 
 				    		   "Inserting to DB lat= " + latitude + " lon= " + longitude, Toast.LENGTH_LONG).show();
 				}
