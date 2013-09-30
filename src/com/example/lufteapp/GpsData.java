@@ -24,7 +24,7 @@ public class GpsData extends Activity {
 		setContentView(R.layout.activity_gps_data);
 		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
-		db.execSQL("CREATE TABLE IF NOT EXISTS gpsData(longitude BIGINT, latitude BIGINT, isHome INTEGER);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS gpsData(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
 	    
 	}
 
