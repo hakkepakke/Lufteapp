@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 
 public class ActivityLog extends ListActivity {
@@ -27,21 +29,25 @@ public class ActivityLog extends ListActivity {
 		adapter=new ArrayAdapter<String>(this,
 	            android.R.layout.simple_list_item_1,
 	            list);
-	    
+
 		setListAdapter(adapter);
 		
 		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
 		
-		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa", null);
-
+		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome != 1", null);
+		
+		list.add("Latitude | Longitude");
+		
 		while(cursor.moveToNext())
 		{
 			String lat = cursor.getString(0);
 			String lon = cursor.getString(1);
-			list.add(lat + " " + lon);
+			list.add(lat + " - " + lon);
 			adapter.notifyDataSetChanged();
 		}
+		
+		
 	}
 
 	@Override
@@ -50,5 +56,9 @@ public class ActivityLog extends ListActivity {
 		getMenuInflater().inflate(R.menu.activity_log, menu);
 		return true;
 	}
+	
+	
+	
+	
 
 }

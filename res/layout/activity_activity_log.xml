@@ -10,8 +10,14 @@
 
     <ListView
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-        android:id="@android:id/list" />
+        android:layout_height="fill_parent"
+        android:id="@android:id/list" 
+        android:fastScrollEnabled="true"
+        android:dividerHeight="2dp"
+        android:layout_alignParentStart="true"
+        android:divider="#b5b5ae"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
 
 
 </RelativeLayout>
