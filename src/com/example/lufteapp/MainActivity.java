@@ -20,12 +20,12 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		
-										//finds the right view for .svg element.
-		ImageView  imageView = (ImageView) findViewById(R.id.logo);
+										//finds the right view for .svg element to populated
+		ImageView  imageView = (ImageView) findViewById(R.id.pictureMain);
 	      imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 	      try
-	      {
-	         SVG svg = SVG.getFromResource(this, R.drawable.logo);
+	      {								//fetching file from drawable resource, rendering, setting and populating
+	         SVG svg = SVG.getFromResource(this, R.drawable.applogo);
 	         Drawable drawable = new PictureDrawable(svg.renderToPicture());
 	         imageView.setImageDrawable(drawable);
 	      }
