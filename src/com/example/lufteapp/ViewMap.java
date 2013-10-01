@@ -104,8 +104,7 @@ public class ViewMap extends FragmentActivity {
     
     private void setUpMarker(LatLng coords) {
     	
-    	Marker marker = mMap.addMarker(new MarkerOptions().position(coords)
-		        .title("Du var her"));
+    	Marker marker = mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
     }
     
     private LatLng getLatLng(String coords){
