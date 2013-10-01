@@ -30,5 +30,11 @@
             android:layout_below="@id/openMap"
             android:onClick="openLog"
             android:text="@string/show_log" />
+        
+        <ImageView
+        	android:id="@+id/logo"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/openLog"/>
 
 </RelativeLayout>

@@ -2,9 +2,15 @@ package com.example.lufteapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 
 public class MainActivity extends Activity {
 
@@ -12,6 +18,19 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		
+										//finds the right view for .svg element.
+		ImageView  imageView = (ImageView) findViewById(R.id.logo);
+	      imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+	      try
+	      {
+	         SVG svg = SVG.getFromResource(this, R.drawable.logo);
+	         Drawable drawable = new PictureDrawable(svg.renderToPicture());
+	         imageView.setImageDrawable(drawable);
+	      }
+	      catch(SVGParseException e)
+	      {}
 		
 		
 	}
