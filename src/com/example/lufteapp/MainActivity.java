@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		
-										//finds the right view for .svg element to populate
+										//finds the right view for .svg element to populatedfgfdg
 		ImageView  imageView = (ImageView) findViewById(R.id.pictureMain);
 	      imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 	      try
