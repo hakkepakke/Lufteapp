@@ -1,5 +1,7 @@
 package com.example.lufteapp;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -65,8 +67,8 @@ public class ViewMap extends FragmentActivity {
     			if(extras.get("LATITUDE") != null){
     			
     				Double mapLat = Double.parseDouble((String) extras.get("LATITUDE"));
-    				Double mapLon = Double.parseDouble((String) extras.get("LONGITUDE"));
-    				final LatLng coords = new LatLng(mapLat, mapLon);
+    				Double mapLng = Double.parseDouble((String) extras.get("LONGITUDE"));
+    				final LatLng coords = new LatLng(mapLat, mapLng);
     			
     				setUpMarker(coords);
     				
@@ -74,11 +76,11 @@ public class ViewMap extends FragmentActivity {
     				
     			} else {
     				
-    				String[] positions = (String[]) extras.get("POSITIONS");
+    				ArrayList<String> positions = (ArrayList<String>) extras.get("POSITIONS");
     				LatLng position;
     				
-    				for(int i = 0; i < positions.length; i++) {
-    					position = getLatLng(positions[i]);
+    				for(int i = 0; i < positions.size(); i++) {
+    					position = getLatLng(positions.get(i));
     					setUpMarker(position);
     				}
     			}

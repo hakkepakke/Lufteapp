@@ -14,5 +14,5 @@
     <string name="show_map">Open Map</string>
     <string name="title_activity_gps_data">GpsData</string>
     <string name="title_activity_view_map">View Map</string>
-
+	<string name="map_log">Show on map</string>
 </resources>
