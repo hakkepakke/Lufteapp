@@ -1,10 +1,15 @@
 package com.example.lufteapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ViewMap extends FragmentActivity {
     /**
@@ -19,6 +24,7 @@ public class ViewMap extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_map);
+		
         setUpMapIfNeeded();
     }
 
@@ -46,13 +52,44 @@ public class ViewMap extends FragmentActivity {
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
+        	
+        	// Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+           
+            Intent intent = getIntent();
+    		Bundle extras = intent.getExtras();
+    		
+    		if(extras != null){
+    			
+    			if(extras.get("LATITUDE") != null){
+    			
+    				Double mapLat = Double.parseDouble((String) extras.get("LATITUDE"));
+    				Double mapLon = Double.parseDouble((String) extras.get("LONGITUDE"));
+    				final LatLng coords = new LatLng(mapLat, mapLon);
+    			
+    				setUpMarker(coords);
+    				
+    				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, 15));
+    				
+    			} else {
+    				
+    				String[] positions = (String[]) extras.get("POSITIONS");
+    				LatLng position;
+    				
+    				for(int i = 0; i < positions.length; i++) {
+    					position = getLatLng(positions[i]);
+    					setUpMarker(position);
+    				}
+    			}
+    			
+    		} else {
+    			
+    			 // Check if we were successful in obtaining the map. And sets map to our location
+                if (mMap != null) {
+                    setUpMap();
+                }
+    		} 
         }
     }
 
@@ -61,5 +98,24 @@ public class ViewMap extends FragmentActivity {
      */
     private void setUpMap() {
     	mMap.setMyLocationEnabled(true);
+    }
+    
+    private void setUpMarker(LatLng coords) {
+    	
+    	Marker marker = mMap.addMarker(new MarkerOptions().position(coords)
+		        .title("Du var her"));
+    }
+    
+    private LatLng getLatLng(String coords){
+    	
+    	LatLng result;
+    	
+		String[] latlong = coords.split("-");
+		Double mapLat = Double.parseDouble((String)latlong[0].trim()); 
+		Double mapLng = Double.parseDouble((String)latlong[1].trim());
+		
+		result = new LatLng(mapLat, mapLng);
+		
+    	return result;
     }
 }
