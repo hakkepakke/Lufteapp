@@ -45,8 +45,8 @@ public class ActivityLog extends Activity {
 		while(cursor.moveToNext())
 		{
 			String lat = cursor.getString(0);
-			String lon = cursor.getString(1);
-			list.add(lat + " - " + lon);
+			String lng = cursor.getString(1);
+			list.add(lat + " - " + lng);
 		} 
 		
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -104,7 +104,7 @@ public class ActivityLog extends Activity {
 		startActivity(intent);
 	}
 	
-	public void openMap(){
+	public void openMap(View view){
 		Intent intent = new Intent(this, ViewMap.class);
 		
 		ListView list = (ListView) findViewById(R.id.list);
