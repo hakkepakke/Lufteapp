@@ -120,7 +120,7 @@ public class GpsData extends Activity {
 		}
 		
 		/*----------Listener class to get coordinates ------------- */
-		private class MyLocationListener implements LocationListener {
+		/*private class MyLocationListener implements LocationListener {
 
 		    @Override
 		    public void onLocationChanged(Location loc) {
@@ -134,7 +134,7 @@ public class GpsData extends Activity {
 		        Log.v(TAG, longitude);
 		        String latitude = "Latitude: " + loc.getLatitude();
 		        Log.v(TAG, latitude);
-		        /*-------to get City-Name from coordinates -------- */
+		        /*-------to get City-Name from coordinates -------- 
 		        String cityName = null;
 		        Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
 		        List<Address> addresses;
@@ -160,6 +160,6 @@ public class GpsData extends Activity {
 
 		    @Override
 		    public void onStatusChanged(String provider, int status, Bundle extras) {}
-		}
+		}*/
 }
 
