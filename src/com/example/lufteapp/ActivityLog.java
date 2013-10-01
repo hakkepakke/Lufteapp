@@ -10,14 +10,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ActivityLog extends Activity {
+	/*
+	*  @author http://stackoverflow.com/questions/4540754/add-dynamically-elements-to-a-listview-android
+	*/
 
 	SQLiteDatabase db;
 	
@@ -31,27 +37,40 @@ public class ActivityLog extends Activity {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
+		db.execSQL("CREATE TABLE IF NOT EXISTS gpsDataa(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome != 1", null);
 		
-		while(cursor.moveToNext()){
+		if (cursor.getCount() ==0){
+			//Cursor is empty
+			TextView txt = (TextView) findViewById(R.id.log_empty);
+			txt.setText(R.string.log_empty);
+			Button btn = (Button) findViewById(R.id.show_locations);
+			btn.setVisibility(View.GONE);
 			
-			String lat = cursor.getString(1);
-			String lng = cursor.getString(0);
-			list.add(lat + " - " + lng);
-		} 
-		
-		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-		        android.R.layout.simple_list_item_1, list);
-		listView.setAdapter(adapter);
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+		} else {
+			TextView txt = (TextView) findViewById(R.id.log_empty);
+			txt.setVisibility(View.GONE);
+			
+			while(cursor.moveToNext()){
 				
-				openMap(adapter.getItem(position));
-			}
-		});
+				String lat = cursor.getString(1);
+				String lng = cursor.getString(0);
+				list.add(lat + " - " + lng);
+			} 
+			
+			final StableArrayAdapter adapter = new StableArrayAdapter(this,
+			        android.R.layout.simple_list_item_1, list);
+			listView.setAdapter(adapter);
+			
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					
+					openMap(adapter.getItem(position));
+				}
+			});
+		}
 	}
 
 	@Override

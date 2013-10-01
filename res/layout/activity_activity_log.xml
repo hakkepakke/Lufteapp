@@ -9,6 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityLog" >
 
+    <TextView 
+        android:layout_height="0dip"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/log_empty" />
+    
+    
     <ListView
         android:layout_height="0dip"
         android:layout_width="match_parent"
@@ -21,6 +28,7 @@
 	<Button
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:id="@+id/show_locations" 
 	    android:text="@string/map_log"
 	    android:onClick="openMap" />
 

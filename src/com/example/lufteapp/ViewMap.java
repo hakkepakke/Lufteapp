@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +27,7 @@ public class ViewMap extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_map);
-		
+        
         setUpMapIfNeeded();
     }
 
@@ -59,35 +60,37 @@ public class ViewMap extends FragmentActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
            
-            Intent intent = getIntent();
-    		Bundle extras = intent.getExtras();
+    		Bundle extras = getIntent().getExtras();
     		
     		if(extras != null){
     			
-    			if(extras.get("LATITUDE") != null){
+    			if(extras.get("POSITION") != null){
     			
-    				Double mapLat = Double.parseDouble((String) extras.get("LATITUDE"));
-    				Double mapLng = Double.parseDouble((String) extras.get("LONGITUDE"));
-    				final LatLng coords = new LatLng(mapLat, mapLng);
+    				String mapCoords = (String) extras.get("POSITION");
+    				LatLng coords = getLatLng(mapCoords);
     			
     				setUpMarker(coords);
     				
     				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, 15));
     				
-    			} else {
+    			} else if(extras.get("POSITIONS") != null) {
     				
     				ArrayList<String> positions = (ArrayList<String>) extras.get("POSITIONS");
     				LatLng position;
     				
+    				Log.d("Hei", positions.get(0));
+    				
     				for(int i = 0; i < positions.size(); i++) {
+    					
     					position = getLatLng(positions.get(i));
     					setUpMarker(position);
+    					
     				}
     			}
     			
     		} else {
-    			
-    			 // Check if we were successful in obtaining the map. And sets map to our location
+    			// If there is no extras via intent -> activity started from main menu
+    			// Check if we were successful in obtaining the map. And sets map to our location
                 if (mMap != null) {
                     setUpMap();
                 }
