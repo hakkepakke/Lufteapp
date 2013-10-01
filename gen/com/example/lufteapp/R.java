@@ -21,9 +21,10 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int itguy=0x7f020001;
-        public static final int logo=0x7f020002;
+        public static final int applogo=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int icon=0x7f020002;
+        public static final int itguy=0x7f020003;
     }
     public static final class id {
         public static final int action_settings=0x7f080009;
@@ -32,10 +33,10 @@ public final class R {
         public static final int button3=0x7f080003;
         public static final int checkIn=0x7f080004;
         public static final int list=0x7f080000;
-        public static final int logo=0x7f080007;
         public static final int map=0x7f080008;
         public static final int openLog=0x7f080006;
         public static final int openMap=0x7f080005;
+        public static final int pictureMain=0x7f080007;
     }
     public static final class layout {
         public static final int activity_activity_log=0x7f030000;
