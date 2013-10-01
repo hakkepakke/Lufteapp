@@ -18,13 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class ActivityLog extends Activity {
-	/*
-	 *  @author http://stackoverflow.com/questions/4540754/add-dynamically-elements-to-a-listview-android
-	 */
-	
+
 	SQLiteDatabase db;
-	//ArrayList<TextView> list = new ArrayList<TextView>();
-	//ArrayAdapter<TextView> adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +30,19 @@ public class ActivityLog extends Activity {
 		
 		ArrayList<String> list = new ArrayList<String>();
 		
-		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
-		
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome != 1", null);
 		
-		//list.add("Latitude | Longitude");
-		
-		while(cursor.moveToNext())
-		{
-			String lat = cursor.getString(0);
-			String lng = cursor.getString(1);
+		while(cursor.moveToNext()){
+			
+			String lat = cursor.getString(1);
+			String lng = cursor.getString(0);
 			list.add(lat + " - " + lng);
 		} 
 		
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 		        android.R.layout.simple_list_item_1, list);
 		listView.setAdapter(adapter);
-		
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -62,8 +52,6 @@ public class ActivityLog extends Activity {
 				openMap(adapter.getItem(position));
 			}
 		});
-		
-		
 	}
 
 	@Override
@@ -74,7 +62,9 @@ public class ActivityLog extends Activity {
 	}
 	
 	private class StableArrayAdapter extends ArrayAdapter<String> {
-
+		/*
+		 * @author http://stackoverflow.com/questions/18116173/list-wont-trigger-onclicklistener
+		 */
 	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
 	    public StableArrayAdapter(Context context, int textViewResourceId,
@@ -95,7 +85,6 @@ public class ActivityLog extends Activity {
 	    public boolean hasStableIds() {
 	    	return true;
 	    }
-
 	}
 	
 	public void openMap(String coords) {
