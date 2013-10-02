@@ -66,26 +66,27 @@ public class ViewMap extends FragmentActivity {
     			
     			if(extras.get("POSITION") != null){
     			
-    				String mapCoords = (String) extras.get("POSITION");
-    				LatLng coords = getLatLng(mapCoords);
+    				String[] coords = (String[]) extras.get("POSITION");
+    				LatLng position = getLatLng(coords[0], coords[1]);
     			
-    				setUpMarker(coords);
+    				setUpMarker(position);
     				
-    				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, 15));
+    				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     				
     			} else if(extras.get("POSITIONS") != null) {
     				
-    				ArrayList<String> positions = (ArrayList<String>) extras.get("POSITIONS");
-    				LatLng position;
+    				ArrayList<String[]> positions = (ArrayList<String[]>) extras.get("POSITIONS");
     				
-    				Log.d("Hei", positions.get(0));
+    				LatLng position = null;
+    				
     				
     				for(int i = 0; i < positions.size(); i++) {
-    					
-    					position = getLatLng(positions.get(i));
+    					String[] coords = positions.get(i);
+    					position = getLatLng(coords[0], coords[1]);
     					setUpMarker(position);
-    					
     				}
+    				
+    				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     			}
     			
     		} else {
@@ -110,13 +111,12 @@ public class ViewMap extends FragmentActivity {
     	Marker marker = mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
     }
     
-    private LatLng getLatLng(String coords){
+    private LatLng getLatLng(String lat, String lng){
     	
     	LatLng result;
     	
-		String[] latlong = coords.split("-");
-		Double mapLat = Double.parseDouble((String)latlong[0].trim()); 
-		Double mapLng = Double.parseDouble((String)latlong[1].trim());
+		Double mapLat = Double.parseDouble((String)lat); 
+		Double mapLng = Double.parseDouble((String)lng);
 		
 		result = new LatLng(mapLat, mapLng);
 		
