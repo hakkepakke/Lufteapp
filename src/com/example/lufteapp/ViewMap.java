@@ -2,10 +2,8 @@ package com.example.lufteapp;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,11 +39,11 @@ public class ViewMap extends FragmentActivity {
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
      * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p>
+     * 
      * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
      * install/update the Google Play services APK on their device.
-     * <p>
+     * 
      * A user can return to this FragmentActivity after following the prompt and correctly
      * installing/updating/enabling the Google Play services. Since the FragmentActivity may not have been
      * completely destroyed during this process (it is likely that it would only be stopped or
@@ -74,7 +72,8 @@ public class ViewMap extends FragmentActivity {
     				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     				
     			} else if(extras.get("POSITIONS") != null) {
-    				
+    				// mutliple positions, called from "show all" button on activitylog
+    				// sets up multiple markers and moves camera to last one
     				ArrayList<String[]> positions = (ArrayList<String[]>) extras.get("POSITIONS");
     				
     				LatLng position = null;
@@ -103,16 +102,17 @@ public class ViewMap extends FragmentActivity {
      * Finds the users posistion on the map
      */
     private void setUpMap() {
+    	//Zooms in at the users location
     	mMap.setMyLocationEnabled(true);
     }
     
     private void setUpMarker(LatLng coords) {
-    	
+    	//Sets up a map marker at coords
     	Marker marker = mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
     }
     
     private LatLng getLatLng(String lat, String lng){
-    	
+    	// converts two strings to LatLng object
     	LatLng result;
     	
 		Double mapLat = Double.parseDouble((String)lat); 

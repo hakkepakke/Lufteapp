@@ -78,8 +78,6 @@ public class MainActivity extends Activity {
 		        	startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		        	startActivity(startMain);
 				}
-				//ProximityReading.setText("Proximity Sensor Reading:"
-				//+ String.valueOf(event.values[0]));
 			}
 		}
     };
