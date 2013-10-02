@@ -239,9 +239,6 @@ public class GpsData extends Activity {
 
 		    @Override
 		    public void onLocationChanged(Location loc) {
-		    	 Toast.makeText(getApplicationContext(), 
-			     "Location changed \nLon=" + longitude + "\nlat = "+latitude,
-			     Toast.LENGTH_SHORT).show();
 		        longitude = loc.getLongitude();
 		        latitude = loc.getLatitude();
 		    }
