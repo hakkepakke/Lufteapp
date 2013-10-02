@@ -43,13 +43,16 @@ public class ActivityLog extends Activity {
 		positionLog = cursor;
 		
 		if (cursor.getCount() ==0){
-			//Cursor is empty
+			//If cursor is empty, shows a text, and removes the 
+			// "show all" button
 			TextView txt = (TextView) findViewById(R.id.log_empty);
 			txt.setText(R.string.log_empty);
 			Button btn = (Button) findViewById(R.id.show_locations);
 			btn.setVisibility(View.GONE);
 			
 		} else {
+			//If the query returned rows
+			//Shows a list with all checked in positions
 			TextView txt = (TextView) findViewById(R.id.log_empty);
 			txt.setVisibility(View.GONE);
 			
@@ -64,6 +67,8 @@ public class ActivityLog extends Activity {
 			        android.R.layout.simple_list_item_1, list);
 			listView.setAdapter(adapter);
 			
+			//Lets the user click on items in the list, showing the locations on
+			// the map
 			listView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
@@ -109,12 +114,19 @@ public class ActivityLog extends Activity {
 	}
 	
 	public void openMap(String[] coords) {
+		//Open a map showing the spesific location of "coords"
+		//Called from clicking a spesific list item
+		
 		Intent intent = new Intent(this, ViewMap.class);
 		intent.putExtra("POSITION", coords);
 		startActivity(intent);
 	}
 	
 	public void openMap(View view){
+		//Gets all coordinates from the list and
+		// displays them on the map
+		//Called from the "show all" button on the screen
+		
 		Intent intent = new Intent(this, ViewMap.class);
 		
 		ArrayList<String[]> positions = new ArrayList<String[]>();
@@ -129,7 +141,8 @@ public class ActivityLog extends Activity {
 	}
 	
 	public String[] getCoords (int logPosition) {
-				
+		//Takes a list position, and returns the coordinates
+		// in a String array
 		positionLog.moveToPosition(logPosition);
 		
 		String lat = positionLog.getString(1);

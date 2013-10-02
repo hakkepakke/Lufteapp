@@ -60,10 +60,15 @@ public class ViewMap extends FragmentActivity {
            
     		Bundle extras = getIntent().getExtras();
     		
+    		
+    		//If the app is opened through the activitylog
+    		//Opening through Open Map doesn't send extras
     		if(extras != null){
-    			
+    		
     			if(extras.get("POSITION") != null){
-    			
+    				//If only one position is sent, through pressing one log item
+    				// sets up one marker
+    				
     				String[] coords = (String[]) extras.get("POSITION");
     				LatLng position = getLatLng(coords[0], coords[1]);
     			
@@ -72,13 +77,14 @@ public class ViewMap extends FragmentActivity {
     				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     				
     			} else if(extras.get("POSITIONS") != null) {
-    				// mutliple positions, called from "show all" button on activitylog
+    				//Mutliple positions, called from "show all" button on activitylog
     				// sets up multiple markers and moves camera to last one
+    				
     				ArrayList<String[]> positions = (ArrayList<String[]>) extras.get("POSITIONS");
     				
     				LatLng position = null;
     				
-    				
+    				//Add all markers on the map
     				for(int i = 0; i < positions.size(); i++) {
     					String[] coords = positions.get(i);
     					position = getLatLng(coords[0], coords[1]);
@@ -112,7 +118,7 @@ public class ViewMap extends FragmentActivity {
     }
     
     private LatLng getLatLng(String lat, String lng){
-    	// converts two strings to LatLng object
+    	//Converts two strings to LatLng object
     	LatLng result;
     	
 		Double mapLat = Double.parseDouble((String)lat); 
