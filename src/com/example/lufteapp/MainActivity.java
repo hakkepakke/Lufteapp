@@ -56,4 +56,9 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, GpsData.class);
 		startActivity(intent);
 	}
+	
+	public void accelerometer(View view) {
+		Intent intent = new Intent(this, accelerometer.class);
+		startActivity(intent);
+	}
 }

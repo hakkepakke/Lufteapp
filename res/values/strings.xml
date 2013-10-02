@@ -17,5 +17,7 @@
 	<string name="map_log">Show on map</string>
 	<string name="map_text">You were here</string>
 	<string name="log_empty">Your log is empty</string>
+	<string name="title_activity_accelerometer">Accelerometer</string>
+	<string name="accelerometer">Showing direction</string>
 	
 </resources>
