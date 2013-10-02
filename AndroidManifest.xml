@@ -48,11 +48,7 @@
             android:name="com.example.lufteapp.GpsData"
             android:label="@string/title_activity_gps_data" >
         </activity>
-        
-        <activity
-            android:name="com.example.lufteapp.accelerometer"
-            android:label="@string/title_activity_accelerometer" >
-        </activity>
+      
         
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

@@ -103,8 +103,4 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	public void accelerometer(View view) {
-		Intent intent = new Intent(this, accelerometer.class);
-		startActivity(intent);
-	}
 }
