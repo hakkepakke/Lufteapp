@@ -25,7 +25,8 @@ public class ActivityLog extends Activity {
 	*  @author http://stackoverflow.com/questions/4540754/add-dynamically-elements-to-a-listview-android
 	*/
 
-	SQLiteDatabase db;
+	private SQLiteDatabase db;
+	private Cursor positionLog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class ActivityLog extends Activity {
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
 		db.execSQL("CREATE TABLE IF NOT EXISTS gpsDataa(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome != 1", null);
+		positionLog = cursor;
 		
 		if (cursor.getCount() ==0){
 			//Cursor is empty
@@ -53,9 +55,9 @@ public class ActivityLog extends Activity {
 			
 			while(cursor.moveToNext()){
 				
-				String lat = cursor.getString(1);
-				String lng = cursor.getString(0);
-				list.add(lat + " - " + lng);
+				String name = cursor.getString(3);
+				
+				list.add(name);
 			} 
 			
 			final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -67,7 +69,7 @@ public class ActivityLog extends Activity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					
-					openMap(adapter.getItem(position));
+					openMap(getCoords(position));
 				}
 			});
 		}
@@ -106,7 +108,7 @@ public class ActivityLog extends Activity {
 	    }
 	}
 	
-	public void openMap(String coords) {
+	public void openMap(String[] coords) {
 		Intent intent = new Intent(this, ViewMap.class);
 		intent.putExtra("POSITION", coords);
 		startActivity(intent);
@@ -115,17 +117,25 @@ public class ActivityLog extends Activity {
 	public void openMap(View view){
 		Intent intent = new Intent(this, ViewMap.class);
 		
-		ListView list = (ListView) findViewById(R.id.list);
-		StableArrayAdapter adapter = (StableArrayAdapter) list.getAdapter();
+		ArrayList<String[]> positions = new ArrayList<String[]>();
 		
-		ArrayList<String> positions = new ArrayList<String>();
-		
-		for(int i = 0; i < adapter.getCount(); i++){
+		for(int i = 0; i < positionLog.getCount(); i++){
 			
-			positions.add(adapter.getItem(i));
+			positions.add(getCoords(i));
 		}
 		
-		intent.putStringArrayListExtra("POSITIONS", positions);
+		intent.putExtra("POSITIONS", positions);
 		startActivity(intent);
+	}
+	
+	public String[] getCoords (int logPosition) {
+				
+		positionLog.moveToPosition(logPosition);
+		
+		String lat = positionLog.getString(1);
+		String lng = positionLog.getString(0);
+		String[] result = {lat, lng};
+		
+		return result;
 	}
 }
