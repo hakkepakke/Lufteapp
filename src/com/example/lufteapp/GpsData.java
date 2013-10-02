@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class GpsData extends Activity {
 		setContentView(R.layout.activity_gps_data);
 		
 		 editLocation = (TextView) findViewById(R.id.kords);
-		 
+		 editLocation.setVisibility(View.GONE);
 		 /*
 		  * This code gets a new GPS position every 20. second with a 5 metre interval.
 		  */    
@@ -135,6 +136,7 @@ public class GpsData extends Activity {
 		       editLocation.setText(
 		    		   "fra DB number = " + number
 		    		  + "lat= " + lat + "lon = " + lon + "isHom= " +isHom);
+		       editLocation.setVisibility(View.VISIBLE);
 		}
 	}
 	

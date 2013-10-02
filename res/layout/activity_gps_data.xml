@@ -10,45 +10,32 @@
 
     <Button
         android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="38dp"
         android:onClick="setHome"
         android:text="Set Home" />
 
     <Button
         android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="setCurrent"
-        android:layout_alignTop="@+id/button1"
-        android:layout_marginLeft="28dp"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_below="@+id/button1"
         android:text="Set Current" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/button2"
         android:onClick="compareHomeCurrent"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="33dp"
         android:text="Last home from DB" />
 
     <TextView
         android:id="@+id/kords"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button3"
         android:layout_below="@+id/button3"
-        android:layout_marginTop="116dp"
         android:text="unknown" />
 
 </RelativeLayout>
