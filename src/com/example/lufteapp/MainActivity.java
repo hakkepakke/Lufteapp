@@ -41,6 +41,9 @@ public class MainActivity extends Activity {
 	    	
 	    }
 		
+	    //Starts an eventlistener using the proximitysensor
+	    //If the user covers the sensor, the phone navigates to
+	    // the device home screen
 	    mySensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 	    myProximitySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 	    
@@ -49,9 +52,6 @@ public class MainActivity extends Activity {
 				     "No proximity sensor!",
 				     Toast.LENGTH_LONG).show();
 	        } else {
-	        	//ProximitySensor.setText(myProximitySensor.getName());
-	        	//ProximityMax.setText("Maximum Range: "
-	        	//  + String.valueOf(myProximitySensor.getMaximumRange()));
 	        	mySensorManager.registerListener(proximitySensorEventListener,
 	        		 myProximitySensor,
 	        		 SensorManager.SENSOR_DELAY_NORMAL);
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onSensorChanged(SensorEvent event) {
-
+			//Navigates to the home screen if the sensor is covered
 			if(event.sensor.getType()==Sensor.TYPE_PROXIMITY){
 				
 				if(event.values[0] == 0) {
