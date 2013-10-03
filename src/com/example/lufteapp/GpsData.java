@@ -9,6 +9,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.app.Activity;
@@ -79,10 +81,15 @@ public class GpsData extends Activity {
 	
 	public void enableGPS()
 	{
+		/*
+		 * If the GPS is not enabled the functions will not work.
+		 * This method will ask the user if he/she wants to enable
+		 * GPS or not.  If the user wants to enable GPS the user is sent to
+		 * the settings menu for GPS.
+		 */
 		// Get Location Manager and check for GPS & Network location services
 		 if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
 		       !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-		   // Build the alert dialog
 				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
@@ -108,19 +115,25 @@ public class GpsData extends Activity {
 	
 	public float compareHomeCurrent(View view)
 	{
+		/*
+		 * Compares the distance between current position 
+		 * and the home position and returns distance in meters.
+		 */
+		
+		//Tries to find out if home exists.
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
 		
 		if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 		{
 			enableGPS();
 		}
-		else if(latitude == 0 && longitude == 0)
+		else if(latitude == 0 && longitude == 0)	//GPS not yet found position
 		{
 	    	 Toast.makeText(getApplicationContext(), 
 		     "Wait for GPS to find a position",
 		     Toast.LENGTH_LONG).show();
 		}
-		else if(cursor.getCount() > 0)
+		else if(cursor.getCount() > 0)	//If home exists.
 		{
 			if(cursor.moveToFirst())
 			{
@@ -149,17 +162,22 @@ public class GpsData extends Activity {
 		 * user already has a home.
 		 * 
 		 */
-		if(latitude != 0 && longitude != 0)
+		if(latitude != 0 && longitude != 0)	//If lat and lon already found.
 		{
 			Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
 			if(cursor.getCount() > 0)
 			{
+		    	 Toast.makeText(getApplicationContext(), 
+		    		     "Cursor found",
+		    		     Toast.LENGTH_LONG).show();
 				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
 				        switch (which){
 				        case DialogInterface.BUTTON_POSITIVE:
 							db.execSQL("DELETE FROM gpsDataa WHERE isHome = 1;");
+					    	 Toast.makeText(getApplicationContext(), 
+					    		     "Running Delete home from DB",Toast.LENGTH_LONG).show();
 							storeMapdataInDatabase(1);
 				            break;
 	
@@ -177,11 +195,17 @@ public class GpsData extends Activity {
 			}
 			else
 			{
+		    	 Toast.makeText(getApplicationContext(), 
+		    		     "StoreMapinDB",
+		    		     Toast.LENGTH_LONG).show();
 				storeMapdataInDatabase(1);
 			}
 		}
 		else if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 		{
+	    	 Toast.makeText(getApplicationContext(), 
+		     "Enabling gps.",
+		     Toast.LENGTH_LONG).show();
 			enableGPS();
 		}
 		else
@@ -222,7 +246,13 @@ public class GpsData extends Activity {
 				if(latitude != 0 && longitude != 0)		//Has not acquired GPS data yet.
 				{
 					try {	
+				    	 Toast.makeText(getApplicationContext(), 
+				    		     "Trying to get homeaddress",
+				    		     Toast.LENGTH_LONG).show();
 						String address = getAddressGoogleQuery();
+				    	 Toast.makeText(getApplicationContext(), 
+				    		     "Address ? = " + address,
+				    		     Toast.LENGTH_LONG).show();
 						db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude +
 								"','" + isHome + "','" + address + "');");
 					       Toast.makeText(getApplicationContext(), 
@@ -256,7 +286,10 @@ public class GpsData extends Activity {
 			 * Also needs internet to work.
 			 */
 			
-			if(!Geocoder.isPresent()){
+			//If internet not avavible it will simply return unknown
+			//Later when connected to the internet it will 
+			//Get the address.
+			if(!isNetworkAvailable()){
 				return "unknown";
 			}
 			
@@ -276,10 +309,20 @@ public class GpsData extends Activity {
 			return (city + "," + address + "," +country);
 		}
 	 
+		/*
+		 * Checks whether or not we got internet!
+		 */
+		private boolean isNetworkAvailable() {
+		    ConnectivityManager connectivityManager 
+		          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+		}
 		
 		/*
 		 * Listenerclass to get latitude and longitude
 		 */
+		
 		private class MyLocationListener implements LocationListener {
 
 		    @Override
