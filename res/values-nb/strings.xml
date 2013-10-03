@@ -17,5 +17,19 @@
 	<string name="save_home">Lagre som hjem</string>
 	<string name="set_current">Sjekker nåværende posisjon</string>
 	<string name ="from_home">Avstand hjemmefra</string>
+	
+	<string name="set_internet">Applikasjonen trenger internett for å fungere som den skal,ha på?</string>
+	<string name="yes">ja</string>
+	<string name="no">nei</string>
+	<string name="enable_gps">Slå på GPS?</string>
+	<string name="gps_position_wait">Vent på at GPS finner posisjon</string>
+	<string name="dist1">Du er </string>
+	<string name="dist2"> meter fra hjemme!</string>
+	<string name="no_home">Du har enda ikke satt et hjem!</string>
+	<string name="new_pos">Er du sikker på at du vil sette et nytt hjem?</string>
+	<string name="find_pos">Vennligst vent på at GPS skal finne posisjon \n Prøv igjen på et øyeblikk</string>
+	<string name="dist_home1">Du er enda ikke 100 meter fra hjemme\nGå lenger!</string>
+	<string name="dist_home2"> meter til</string>
+	<string name="unknown">ukjent</string>
 
 </resources>

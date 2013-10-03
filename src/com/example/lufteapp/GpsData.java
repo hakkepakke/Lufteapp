@@ -60,6 +60,29 @@ public class GpsData extends Activity {
 	    /*
 	     * Starts listening to updates when application resumes
 	     */
+	    if(!isNetworkAvailable())	{
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        switch (which){
+			        case DialogInterface.BUTTON_POSITIVE:
+			   	     Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+				     startActivity(intent);
+			            break;
+
+			        case DialogInterface.BUTTON_NEGATIVE:
+			            //No button clicked
+			        	//DO nothing
+			            break;
+			        }
+			    }
+			};
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			
+			builder.setMessage(getString(R.string.set_internet)).setPositiveButton(getString(R.string.yes), dialogClickListener)
+			    .setNegativeButton(getString(R.string.no), dialogClickListener).show();
+	    }
 		 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 	    {
@@ -111,8 +134,8 @@ public class GpsData extends Activity {
 				};
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("Enable GPS?").setPositiveButton("Yes", dialogClickListener)
-				    .setNegativeButton("No", dialogClickListener).show();
+				builder.setMessage(getString(R.string.enable_gps)).setPositiveButton(getString(R.string.yes), dialogClickListener)
+				    .setNegativeButton(getString(R.string.no), dialogClickListener).show();
 		 }
 	}
 	
@@ -133,7 +156,7 @@ public class GpsData extends Activity {
 		else if(latitude == 0 && longitude == 0)	//GPS not yet found position
 		{
 	    	 Toast.makeText(getApplicationContext(), 
-		     "Wait for GPS to find a position",
+	    	 getString(R.string.gps_position_wait),
 		     Toast.LENGTH_LONG).show();
 		}
 		else if(cursor.getCount() > 0)	//If home position exists.
@@ -144,14 +167,14 @@ public class GpsData extends Activity {
 			double latitudeHome = Double.parseDouble(cursor.getString(1));
 			float[] results = new float[1];
 			Location.distanceBetween(latitudeHome, longitudeHome, latitude, longitude, results);
-			 editLocation.setText("You are "+results[0] + " meters from home!");
+			 editLocation.setText(getString(R.string.dist1)+results[0] + getString(R.string.dist2));
 			 return results[0];
 			}
 		}
 		else
 		{
 	    	 Toast.makeText(getApplicationContext(), 
-		     "You have not yet set a home!",
+	    	 getString(R.string.no_home),
 		     Toast.LENGTH_LONG).show();
 		}
 		return 0;
@@ -170,9 +193,6 @@ public class GpsData extends Activity {
 			Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
 			if(cursor.getCount() > 0)
 			{
-		    	 Toast.makeText(getApplicationContext(), 
-		    		     "Cursor found",
-		    		     Toast.LENGTH_LONG).show();
 				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
@@ -191,8 +211,8 @@ public class GpsData extends Activity {
 				};
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("Are you sure you want to set a new home position?").setPositiveButton("Yes", dialogClickListener)
-				    .setNegativeButton("No", dialogClickListener).show();
+				builder.setMessage(getString(R.string.new_pos)).setPositiveButton(getString(R.string.yes), dialogClickListener)
+				    .setNegativeButton(getString(R.string.no), dialogClickListener).show();
 			}
 			else
 			{
@@ -206,8 +226,7 @@ public class GpsData extends Activity {
 		else
 		{
 	    	 Toast.makeText(getApplicationContext(), 
-		     "Please wait for GPS to find position" +
-		     "\nTry again in a moment",
+	    			 getString(R.string.find_pos),
 		     Toast.LENGTH_LONG).show();
 		}
 	}
@@ -228,8 +247,7 @@ public class GpsData extends Activity {
 		{
 			float howMuchLeft = 100 - distanceFromHome;
 		       Toast.makeText(getApplicationContext(), 
-		    		  "You are not yet 100 meters from home" +
-		    		  "\nPlease walk " + howMuchLeft + " meters more", Toast.LENGTH_LONG).show();
+		    		   getString(R.string.dist_home1) + howMuchLeft + getString(R.string.dist_home2), Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -257,8 +275,7 @@ public class GpsData extends Activity {
 				else
 				{
 			    	 Toast.makeText(getApplicationContext(), 
-				     "Please wait for GPS to find position" +
-				     "\nTry again in a moment",
+			    			 getString(R.string.find_pos),
 				     Toast.LENGTH_LONG).show();
 				}
 			}
@@ -277,9 +294,10 @@ public class GpsData extends Activity {
 			 * Also needs internet to work.
 			 */
 			
-			//If internet not avavible it will simply return unknown
-			//Later when connected to the internet it will 
-			//Get the address.
+			/*If internet not avavible it will simply return unknown
+			*Later when connected to the internet it will 
+			*Get the address.
+			*/
 			if(!isNetworkAvailable()){
 				return "unknown";
 			}

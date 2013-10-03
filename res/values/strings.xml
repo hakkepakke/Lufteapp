@@ -17,5 +17,19 @@
 	<string name="save_home">Set as home</string>
 	<string name="set_current">Checking current position</string>
 	<string name ="from_home">Distance from home</string>
+	<string name="set_internet">Application needs internet to function properly, Enable?</string>
+	<string name="yes">yes</string>
+	<string name="no">no</string>
+	<string name="enable_gps">Enable GPS?</string>
+	<string name="gps_position_wait">Wait for GPS to find a position</string>
+	<string name="dist1">You are </string>
+	<string name="dist2"> meters from home!</string>
+	<string name="no_home">You have not yet set a home!</string>
+	<string name="new_pos">Are you sure you want to set a new home?</string>
+	<string name="find_pos">Please wait for GPS to find position \n Try again in a moment</string>
+	<string name="dist_home1">You are not yet 100 meters from home\nPlease walk </string>
+	<string name="dist_home2"> meters more</string>
+	<string name="unknown">unknown</string>
+	
 	
 </resources>
