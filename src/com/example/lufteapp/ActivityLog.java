@@ -1,14 +1,18 @@
 package com.example.lufteapp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -150,5 +154,42 @@ public class ActivityLog extends Activity {
 		String[] result = {lat, lng};
 		
 		return result;
+	}
+	
+	private void getAllAddresses() {
+		/*
+		 * Might have to restart to get it to work.
+		 * Functions gets the address, city and country
+		 * with the use of latitude and longitude. 
+		 * Also needs internet to work.
+		 */
+		
+		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE name = 'unknown';", null);
+		if(cursor.moveToFirst())
+		{
+		double longitude = Double.parseDouble((cursor.getString(0)));
+		double latitude = Double.parseDouble(cursor.getString(1));
+		
+		Geocoder geocoder;
+		List<Address> addresses = null;
+		geocoder = new Geocoder(this, Locale.getDefault());
+		try {
+			addresses = geocoder.getFromLocation(latitude, longitude, 1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String address = addresses.get(0).getAddressLine(0);
+		String city = addresses.get(0).getAddressLine(1);
+		String country = addresses.get(0).getAddressLine(2);
+
+		String addresse = (city + "," + address + "," +country);
+		db.execSQL("UPDATE gpsDataa" +
+				"SET name = " + addresse + 
+				" WHERE longitude = " + longitude + 
+				"AND WHERE latitude = " + latitude);
+		//Må også loope gjennom, you fix this
+		}
 	}
 }

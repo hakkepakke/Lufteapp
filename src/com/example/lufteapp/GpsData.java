@@ -106,7 +106,7 @@ public class GpsData extends Activity {
 		 }
 	}
 	
-	public void compareHomeCurrent(View view)
+	public float compareHomeCurrent(View view)
 	{
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
 		
@@ -129,6 +129,7 @@ public class GpsData extends Activity {
 			float[] results = new float[1];
 			Location.distanceBetween(latitudeHome, longitudeHome, latitude, longitude, results);
 			 editLocation.setText("Compared\nMeter= "+results[0]);
+			 return results[0];
 			}
 		}
 		else
@@ -137,6 +138,8 @@ public class GpsData extends Activity {
 		     "You have not yet set a home!",
 		     Toast.LENGTH_LONG).show();
 		}
+		return 0;
+
 	}
 	
 	public void setHome(View view) 
@@ -192,7 +195,23 @@ public class GpsData extends Activity {
 	
 	public void setCurrent(View view)
 	{
-		storeMapdataInDatabase(0);
+		/*
+		 * Sets current GPS position, but ONLY
+		 * if the user is more than 100 metres from home.
+		 * This will ensure the user gets a "luftetur" or a walk.
+		 */
+		float distanceFromHome = compareHomeCurrent(view);
+		if(distanceFromHome >= 100) 
+		{
+			storeMapdataInDatabase(0);
+		}
+		else
+		{
+			float howMuchLeft = 100 - distanceFromHome;
+		       Toast.makeText(getApplicationContext(), 
+		    		  "You are not yet 100 meters from home" +
+		    		  "\nPlease walk " + howMuchLeft + " meters more", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 		
@@ -228,12 +247,19 @@ public class GpsData extends Activity {
 			}
 		}
 		
+		
 		private String getAddressGoogleQuery() {
 			/*
 			 * Might have to restart to get it to work.
 			 * Functions gets the address, city and country
-			 * with the use of latitude and longitude.
+			 * with the use of latitude and longitude. 
+			 * Also needs internet to work.
 			 */
+			
+			if(!Geocoder.isPresent()){
+				return "unknown";
+			}
+			
 			Geocoder geocoder;
 			List<Address> addresses = null;
 			geocoder = new Geocoder(this, Locale.getDefault());
@@ -243,7 +269,6 @@ public class GpsData extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			String address = addresses.get(0).getAddressLine(0);
 			String city = addresses.get(0).getAddressLine(1);
 			String country = addresses.get(0).getAddressLine(2);
