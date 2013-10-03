@@ -4,28 +4,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.R.bool;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,15 +38,7 @@ public class GpsData extends Activity {
 		setContentView(R.layout.activity_gps_data);
 		
 		 editLocation = (TextView) findViewById(R.id.kords);
-		 editLocation.setVisibility(View.GONE);
-		 /*
-		  * This code gets a new GPS position every 20. second with a 5 metre interval.
-		  */    
-		 
-		 /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		 locationListener = new MyLocationListener();  
-		 locationManager.requestLocationUpdates(  
-		 LocationManager.GPS_PROVIDER, 20000, 5, locationListener);*/
+		 //editLocation.setVisibility(View.GONE);
 		
 		db = openOrCreateDatabase("gpsDataDB", MODE_PRIVATE,null);
 		db.execSQL("CREATE TABLE IF NOT EXISTS gpsDataa(longitude BIGINT, latitude BIGINT, isHome INTEGER, name STRING);");
@@ -122,21 +108,34 @@ public class GpsData extends Activity {
 	
 	public void compareHomeCurrent(View view)
 	{
-		/*
-		 * Midlertidig kode for å få ut siste fra DB
-		 * Gjelder da kun hjemmeposisjon.
-		 */
 		Cursor cursor = db.rawQuery("SELECT * FROM gpsDataa WHERE isHome = 1;", null);
-		if(cursor.moveToFirst())
+		
+		if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 		{
-			String lat = cursor.getString(0);
-			String lon = cursor.getString(1);
-			String isHom = cursor.getString(2);
-			int number = cursor.getCount();
-		       editLocation.setText(
-		    		   "fra DB number = " + number
-		    		  + "lat= " + lat + "lon = " + lon + "isHom= " +isHom);
-		       editLocation.setVisibility(View.VISIBLE);
+			enableGPS();
+		}
+		else if(latitude == 0 && longitude == 0)
+		{
+	    	 Toast.makeText(getApplicationContext(), 
+		     "Wait for GPS to find a position",
+		     Toast.LENGTH_LONG).show();
+		}
+		else if(cursor.getCount() > 0)
+		{
+			if(cursor.moveToFirst())
+			{
+			double longitudeHome = Double.parseDouble((cursor.getString(0)));
+			double latitudeHome = Double.parseDouble(cursor.getString(1));
+			float[] results = new float[1];
+			Location.distanceBetween(latitudeHome, longitudeHome, latitude, longitude, results);
+			 editLocation.setText("Compared\nMeter= "+results[0]);
+			}
+		}
+		else
+		{
+	    	 Toast.makeText(getApplicationContext(), 
+		     "You have not yet set a home!",
+		     Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -204,9 +203,12 @@ public class GpsData extends Activity {
 				if(latitude != 0 && longitude != 0)		//Has not acquired GPS data yet.
 				{
 					try {	
-						db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude + "','" + isHome + "','homeyo');");
+						String address = getAddressGoogleQuery();
+						db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude +
+								"','" + isHome + "','" + address + "');");
 					       Toast.makeText(getApplicationContext(), 
-					    		   "Inserting to DB lat= " + latitude + " lon= " + longitude, Toast.LENGTH_LONG).show();
+					    		   "Inserting to DB lat= " + latitude + " lon= " + longitude 
+					    		   + "\nAddress = " + address, Toast.LENGTH_LONG).show();
 					}
 					catch(NullPointerException e) {
 						e.printStackTrace();
@@ -226,16 +228,32 @@ public class GpsData extends Activity {
 			}
 		}
 		
-		public bool checkHome(int lat, int lon)
-		{
-			//Check if sent lat and lon is your home address
-			return null;
+		private String getAddressGoogleQuery() {
+			/*
+			 * Might have to restart to get it to work.
+			 * Functions gets the address, city and country
+			 * with the use of latitude and longitude.
+			 */
+			Geocoder geocoder;
+			List<Address> addresses = null;
+			geocoder = new Geocoder(this, Locale.getDefault());
+			try {
+				addresses = geocoder.getFromLocation(latitude, longitude, 1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			String address = addresses.get(0).getAddressLine(0);
+			String city = addresses.get(0).getAddressLine(1);
+			String country = addresses.get(0).getAddressLine(2);
+
+			return (city + "," + address + "," +country);
 		}
+	 
 		
-		/*----------Listener class to get coordinates ------------- */
 		/*
-		 *  Code from http://stackoverflow.com/questions/1513485/how-do-i-get-the-current-gps-location-programmatically-in-android
-		 *  Helperclass to get GPS
+		 * Listenerclass to get latitude and longitude
 		 */
 		private class MyLocationListener implements LocationListener {
 
@@ -244,7 +262,10 @@ public class GpsData extends Activity {
 		        longitude = loc.getLongitude();
 		        latitude = loc.getLatitude();
 		    }
-
+		    
+		    /*
+		     * No need for these extra methods.
+		     */
 		    public void onProviderDisabled(String provider) {}
 
 		    public void onProviderEnabled(String provider) {}

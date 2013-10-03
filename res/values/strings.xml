@@ -17,5 +17,8 @@
 	<string name="map_log">Show all on map</string>
 	<string name="map_text">You were here</string>
 	<string name="log_empty">Your log is empty</string>
+	<string name="save_home">Save home position</string>
+	<string name="set_current">Set Current position</string>
+	<string name ="from_home">How far away from home are you?</string>
 	
 </resources>
