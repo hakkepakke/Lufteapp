@@ -9,7 +9,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ViewMap extends FragmentActivity {
@@ -114,7 +113,7 @@ public class ViewMap extends FragmentActivity {
     
     private void setUpMarker(LatLng coords) {
     	//Sets up a map marker at coords
-    	Marker marker = mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
+    	mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
     }
     
     private LatLng getLatLng(String lat, String lng){
