@@ -14,8 +14,8 @@
 	<string name="map_log">Show all on map</string>
 	<string name="map_text">You were here</string>
 	<string name="log_empty">Log is empty</string>
-	<string name="save_home">Make this your homeposition</string>
-	<string name="set_current">Checkin current position</string>
-	<string name ="from_home">How far away from home are you?</string>
+	<string name="save_home">Set as home</string>
+	<string name="set_current">Checking current position</string>
+	<string name ="from_home">Distance from home</string>
 	
 </resources>
