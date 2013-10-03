@@ -57,7 +57,9 @@ public class GpsData extends Activity {
 	@Override
 	protected void onResume() {
 	    super.onResume();
-	    
+	    /*
+	     * Starts listening to updates when application resumes
+	     */
 		 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 	    {
@@ -73,6 +75,7 @@ public class GpsData extends Activity {
 	
 	@Override 
 	protected void onPause() {
+		//Stops listening for GPS when application is paused
 		if(locationListener != null){	//It cant be removed, if it is not initialised
 			locationManager.removeUpdates(locationListener);
 		}
@@ -133,7 +136,7 @@ public class GpsData extends Activity {
 		     "Wait for GPS to find a position",
 		     Toast.LENGTH_LONG).show();
 		}
-		else if(cursor.getCount() > 0)	//If home exists.
+		else if(cursor.getCount() > 0)	//If home position exists.
 		{
 			if(cursor.moveToFirst())
 			{
@@ -141,7 +144,7 @@ public class GpsData extends Activity {
 			double latitudeHome = Double.parseDouble(cursor.getString(1));
 			float[] results = new float[1];
 			Location.distanceBetween(latitudeHome, longitudeHome, latitude, longitude, results);
-			 editLocation.setText("Compared\nMeter= "+results[0]);
+			 editLocation.setText("You are "+results[0] + " meters from home!");
 			 return results[0];
 			}
 		}
@@ -176,8 +179,6 @@ public class GpsData extends Activity {
 				        switch (which){
 				        case DialogInterface.BUTTON_POSITIVE:
 							db.execSQL("DELETE FROM gpsDataa WHERE isHome = 1;");
-					    	 Toast.makeText(getApplicationContext(), 
-					    		     "Running Delete home from DB",Toast.LENGTH_LONG).show();
 							storeMapdataInDatabase(1);
 				            break;
 	
@@ -190,22 +191,16 @@ public class GpsData extends Activity {
 				};
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("Are you sure you want to set a new home?").setPositiveButton("Yes", dialogClickListener)
+				builder.setMessage("Are you sure you want to set a new home position?").setPositiveButton("Yes", dialogClickListener)
 				    .setNegativeButton("No", dialogClickListener).show();
 			}
 			else
 			{
-		    	 Toast.makeText(getApplicationContext(), 
-		    		     "StoreMapinDB",
-		    		     Toast.LENGTH_LONG).show();
 				storeMapdataInDatabase(1);
 			}
 		}
 		else if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 		{
-	    	 Toast.makeText(getApplicationContext(), 
-		     "Enabling gps.",
-		     Toast.LENGTH_LONG).show();
 			enableGPS();
 		}
 		else
@@ -241,23 +236,19 @@ public class GpsData extends Activity {
 		
 		void storeMapdataInDatabase(int isHome)
 		{
+			/*
+			 * Function will try to get GPS data and address 
+			 * and insert it into the database.
+			 * If GPS not enabled, the user will be asked to enable GPS before it works.
+			 */
 			if((locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)))
 			{
 				if(latitude != 0 && longitude != 0)		//Has not acquired GPS data yet.
 				{
 					try {	
-				    	 Toast.makeText(getApplicationContext(), 
-				    		     "Trying to get homeaddress",
-				    		     Toast.LENGTH_LONG).show();
 						String address = getAddressGoogleQuery();
-				    	 Toast.makeText(getApplicationContext(), 
-				    		     "Address ? = " + address,
-				    		     Toast.LENGTH_LONG).show();
 						db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude +
 								"','" + isHome + "','" + address + "');");
-					       Toast.makeText(getApplicationContext(), 
-					    		   "Inserting to DB lat= " + latitude + " lon= " + longitude 
-					    		   + "\nAddress = " + address, Toast.LENGTH_LONG).show();
 					}
 					catch(NullPointerException e) {
 						e.printStackTrace();
