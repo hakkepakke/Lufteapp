@@ -2,11 +2,17 @@
 <resources>
 
     <string name="app_name">Lufteapp</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Innstillinger</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_activity_log">ActivityLog</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_activity_activity_log">Siste innsjekket steder</string>
+    <string name="check_in">Sjekk inn</string>
+    <string name="show_log">Vis logg</string>
+    <string name="imageText">It Guy Outside</string>  <!-- Easter egg -->
+    <string name="show_map">Åpne kart</string>
+    <string name="title_activity_gps_data">GPS data</string>
+    <string name="title_activity_view_map">Vis kart</string>
+	<string name="map_log">Vis alle på kart</string>
+	<string name="map_text">Du har vært her</string>
+	<string name="log_empty">Du har ikke innsjekket steder</string>
 
 </resources>
