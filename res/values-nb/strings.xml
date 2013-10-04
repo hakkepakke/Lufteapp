@@ -15,7 +15,7 @@
 	<string name="map_text">Du har vært her</string>
 	<string name="log_empty">Du har ikke innsjekket steder</string>
 	<string name="save_home">Lagre som hjem</string>
-	<string name="set_current">Sjekker nåværende posisjon</string>
+	<string name="set_current">Sjekk inn posisjon</string>
 	<string name ="from_home">Avstand hjemmefra</string>
 
 </resources>
