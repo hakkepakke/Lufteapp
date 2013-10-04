@@ -107,17 +107,23 @@ public class ViewMap extends FragmentActivity {
      * Finds the users posistion on the map
      */
     private void setUpMap() {
-    	//Zooms in at the users location
+    	/*
+    	 * Zooms in at the users location
+    	 */
     	mMap.setMyLocationEnabled(true);
     }
     
     private void setUpMarker(LatLng coords) {
-    	//Sets up a map marker at coords
+    	/*
+    	 * Sets up a map marker at coords
+    	 */
     	mMap.addMarker(new MarkerOptions().position(coords).title(getString(R.string.map_text)));
     }
     
     private LatLng getLatLng(String lat, String lng){
-    	//Converts two strings to LatLng object
+    	/*
+    	 * Converts two strings to LatLng object
+    	 */
     	LatLng result;
     	
 		Double mapLat = Double.parseDouble((String)lat); 
