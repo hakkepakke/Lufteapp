@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Lufteapp</string>
+    <string name="action_settings">Innstillinger</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_activity_log">Siste innsjekket steder</string>
+    <string name="check_in">Sjekk inn</string>
+    <string name="show_log">Vis logg</string>
+    <string name="imageText">It Guy Outside</string>  <!-- Easter egg -->
+    <string name="show_map">Åpne kart</string>
+    <string name="title_activity_gps_data">GPS data</string>
+    <string name="title_activity_view_map">Vis kart</string>
+	<string name="map_log">Vis alle på kart</string>
+	<string name="map_text">Du har vært her</string>
+	<string name="log_empty">Du har ikke innsjekket steder</string>
+	<string name="save_home">Lagre som hjem</string>
+<<<<<<< HEAD
+	<string name="set_current">Sjekk inn på nåværende posisjon</string>
+=======
+	<string name="set_current">Sjekk inn posisjon</string>
+>>>>>>> 9fb39c0f31a6e79de14a0a54692b9768a4a013c7
+	<string name ="from_home">Avstand hjemmefra</string>
+	
+	<string name="set_internet">Applikasjonen trenger internett for å fungere som den skal,ha på?</string>
+	<string name="yes">ja</string>
+	<string name="no">nei</string>
+	<string name="enable_gps">Slå på GPS?</string>
+	<string name="gps_position_wait">Vent på at GPS finner posisjon</string>
+	<string name="dist1">Du er</string>
+	<string name="dist2">meter fra hjemme!</string>
+	<string name="no_home">Du har enda ikke satt et hjem!</string>
+	<string name="new_pos">Er du sikker på at du vil sette et nytt hjem?</string>
+	<string name="find_pos">Vennligst vent på at GPS skal finne posisjon \n Prøv igjen på et øyeblikk</string>
+	<string name="dist_home1">Du er enda ikke 100 meter fra hjemme\nGå lenger!</string>
+	<string name="dist_home2"> meter til</string>
+	<string name="unknown">ukjent</string>
+
+</resources>
