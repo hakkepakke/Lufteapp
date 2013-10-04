@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lufteapp"
+    package="com.hakkepakke.lufteapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.lufteapp.MainActivity"
+            android:name="com.hakkepakke.lufteapp.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,15 +37,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.lufteapp.ActivityLog"
+            android:name="com.hakkepakke.lufteapp.ActivityLog"
             android:label="@string/title_activity_activity_log" >
         </activity>
         <activity
-            android:name="com.example.lufteapp.ViewMap"
+            android:name="com.hakkepakke.lufteapp.ViewMap"
             android:label="@string/title_activity_view_map" >
         </activity>
         <activity
-            android:name="com.example.lufteapp.GpsData"
+            android:name="com.hakkepakke.lufteapp.GpsData"
             android:label="@string/title_activity_gps_data" >
         </activity>
       
