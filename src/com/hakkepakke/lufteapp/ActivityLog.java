@@ -81,7 +81,10 @@ public class ActivityLog extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/*
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
+		
 		getMenuInflater().inflate(R.menu.activity_log, menu);
 		return true;
 	}
@@ -113,8 +116,10 @@ public class ActivityLog extends Activity {
 	}
 	
 	public void openMap(String[] coords) {
-		//Open a map showing the spesific location of "coords"
-		//Called from clicking a spesific list item
+		/*
+		 * Open a map showing the spesific location of "coords"
+		 * Called from clicking a spesific list item
+		 */
 		
 		Intent intent = new Intent(this, ViewMap.class);
 		intent.putExtra("POSITION", coords);
@@ -122,10 +127,11 @@ public class ActivityLog extends Activity {
 	}
 	
 	public void openMap(View view){
-		//Gets all coordinates from the list and
-		// displays them on the map
-		//Called from the "show all" button on the screen
-		
+		/*
+		 * Gets all coordinates from the list and
+		 * displays them on the map
+		 * Called from the "show all" button on the screen
+		 */
 		Intent intent = new Intent(this, ViewMap.class);
 		
 		ArrayList<String[]> positions = new ArrayList<String[]>();
@@ -140,8 +146,11 @@ public class ActivityLog extends Activity {
 	}
 	
 	public String[] getCoords (int logPosition) {
-		//Takes a list position, and returns the coordinates
-		// in a String array
+		/*
+		 * Takes a list position, and returns the coordinates
+		 * in a String array
+		 */
+		
 		positionLog.moveToPosition(logPosition);
 		
 		String lat = positionLog.getString(1);
@@ -150,8 +159,4 @@ public class ActivityLog extends Activity {
 		
 		return result;
 	}
-	
-	/*
-	 *  author: http://stackoverflow.com/questions/4238921/android-detect-whether-there-is-an-internet-connection-available
-	 */	
 }
