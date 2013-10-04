@@ -1,4 +1,4 @@
-package com.example.lufteapp;
+package com.hakkepakke.lufteapp;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.lufteapp;
+package com.hakkepakke.lufteapp;
 
 import java.util.ArrayList;
 
