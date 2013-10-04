@@ -30,6 +30,7 @@
 	<string name="dist_home1">You are not yet 100 meters from home\nPlease walk </string>
 	<string name="dist_home2"> meters more</string>
 	<string name="unknown">unknown</string>
+	<string name="pos_stored">Position stored!</string>
 	
 	
 </resources>
