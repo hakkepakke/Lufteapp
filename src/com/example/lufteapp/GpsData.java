@@ -167,7 +167,7 @@ public class GpsData extends Activity {
 			double latitudeHome = Double.parseDouble(cursor.getString(1));
 			float[] results = new float[1];
 			Location.distanceBetween(latitudeHome, longitudeHome, latitude, longitude, results);
-			 editLocation.setText(getString(R.string.dist1)+results[0] + getString(R.string.dist2));
+			 editLocation.setText(getString(R.string.dist1)+" "+ (int) results[0] + " "+ getString(R.string.dist2));
 			 return results[0];
 			}
 		}
@@ -242,6 +242,12 @@ public class GpsData extends Activity {
 		if(distanceFromHome >= 100) 
 		{
 			storeMapdataInDatabase(0);
+		}
+		else if(latitude == 0 && longitude == 0)	//GPS not yet found position
+		{
+	    	 Toast.makeText(getApplicationContext(), 
+	    	 getString(R.string.gps_position_wait),
+		     Toast.LENGTH_LONG).show();
 		}
 		else
 		{
