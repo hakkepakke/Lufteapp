@@ -273,6 +273,9 @@ public class GpsData extends Activity {
 						String address = getAddressGoogleQuery();
 						db.execSQL("INSERT INTO gpsDataa VALUES('"+longitude + "','" + latitude +
 								"','" + isHome + "','" + address + "');");
+				    	 Toast.makeText(getApplicationContext(), 
+				    			 getString(R.string.pos_stored),
+				    			 Toast.LENGTH_LONG).show();
 					}
 					catch(NullPointerException e) {
 						e.printStackTrace();

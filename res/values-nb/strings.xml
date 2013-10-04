@@ -31,5 +31,6 @@
 	<string name="dist_home1">Du er enda ikke 100 meter fra hjemme\nGå lenger!</string>
 	<string name="dist_home2"> meter til</string>
 	<string name="unknown">ukjent</string>
+	<string name="pos_stored">Posisjon lagret!</string>
 
 </resources>
